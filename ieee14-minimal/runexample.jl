@@ -1,5 +1,4 @@
 begin
-    ENV["PLOTS_USE_ATOM_PLOTPANE"] = "false"
     using Pkg
     Pkg.activate(@__DIR__)
     Pkg.instantiate()
@@ -13,7 +12,6 @@ begin
     using PowerDynBase: AbstractNodeParameters
     using LaTeXStrings
     using Plots
-    # Plots.scalefontsizes(0.8)
     using SparseArrays
 end
 
@@ -26,7 +24,6 @@ begin
     df_names = [:type, :P_gen, :Q_gen, :P_load, :Q_load, :intertia, :damping]
     names!(getfield(busses_df, :colindex), df_names)
 end
-#busses_df
 
 begin
     println("converting dataframes to types of PowerDynamics")
