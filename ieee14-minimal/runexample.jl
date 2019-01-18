@@ -1,6 +1,7 @@
 begin
     using Pkg
     Pkg.activate(@__DIR__)
+    Pkg.resolve()
     Pkg.instantiate()
     cd(@__DIR__)
 end
@@ -109,7 +110,7 @@ g = GridDynamics(node_list, LY)
 # search for fixed point
 
 # find the fixed point = normal operation point
-fp = operationpoint(g, ones(SystemSize(g)))
+fp = getOperationPoint(g, ones(SystemSize(g)))
 
 begin
     # just ensure the correct admittance laplacian is used
@@ -142,7 +143,7 @@ begin
         )
     savefig(pl, "ieee14-frequency-perturbation.pdf")
     savefig(pl, "ieee14-frequency-perturbation.svg")
-    # display(pl)
+    display(pl)
 end
 
 

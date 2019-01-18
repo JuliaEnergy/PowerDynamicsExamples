@@ -114,7 +114,7 @@ g = GridDynamics(node_list, LY)
 # search for fixed point
 
 # find the fixed point = normal operation point
-fp = operationpoint(g, ones(SystemSize(g)))
+fp = getOperationPoint(g, ones(SystemSize(g)))
 
 begin
     # just ensure the correct admittance laplacian is used
@@ -169,15 +169,15 @@ end
 
 
 begin
-    # pl_v = plot(sol, :, :v, legend = (0.4, 1.), ylabel=L"V [p.u.]")
+    pl_v = plot(sol, :, :v, legend = (0.4, 1.), ylabel=L"V [p.u.]")
     pl_p = plot(sol, :, :p, legend = (0.8, 0.95), ylabel=L"p [p.u.]", label=p_labels)
     pl_ω = plot(sol, swing_indices, :ω, legend = (0.8, 0.7), ylabel=L"\omega \left[rad/s\right]", label=ω_labels, color=ω_colors)
     #pl_u = plot(sol, swing_indices, :u, legend = (0.8, 0.7), ylabel=L"u [p.u.]", label=label, color=ω_colors)
 
     pl = plot(
-        # pl_v,
+        pl_v,
         pl_p, pl_ω;
-        layout=(2,1),
+        layout=(3,1),
         size = (500, 500),
         lw=3,
         xlabel=L"t[s]"
