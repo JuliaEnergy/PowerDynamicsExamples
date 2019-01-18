@@ -6,3 +6,7 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PowerDynBase = "7ffb48b1-f436-5a59-a310-b4407da33972"
 PowerDynamics = "cc46b21f-1b17-51c2-b642-af74c3d3a8be"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
+[compat]
+Julia = "^1.0"
+PowerDynamics = "^0.4.1"
