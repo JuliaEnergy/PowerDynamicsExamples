@@ -9,8 +9,10 @@ end
 begin
     using CSV
     using DataFrames
-    using PowerDynamics
+    using PowerDynBase
     using PowerDynBase: AbstractNodeParameters
+    using PowerDynSolve
+    using PowerDynOperationPoint
     using LaTeXStrings
     using Plots
     using SparseArrays
@@ -93,29 +95,9 @@ begin
         return Y
     end
 
-    function linedf2tabular(df)
-        lines = ["$(getfield(row, :row)) & $(row[:from]) & $(row[:to]) & $(row[:R]) & $(row[:X])" for row in eachrow(df)]
-        string(raw"""\begin{tabular}{|c||c|c|c|c|}
-        \toprule
-        line number & from bus & to bus & $ R\, [p.u.]$ & $ X\, [p.u.]$ \\\midrule""",
-        join(lines, raw"\\\hline"), raw"""\\
-        \bottomrule
-        \end{tabular}""")
-    end
-
     # admittance laplacian
     LY = linedf2LY(lines_df, length(node_list))
 end
-
-
-################################################################
-# plotting the network representing the power grid
-# check the two below for plotting graphs
-# using LightGraphs
-# using GraphPlot
-# g = Graph(Array(LY).!=0)
-# gplot(g)
-################################################################
 
 # create network dynamics object
 g = GridDynamics(node_list, LY)
@@ -123,20 +105,16 @@ g_power_reduction = GridDynamics(node_list_power_reduction, LY)
 
 # find the fixed point = normal operation point
 fp = getOperationPoint(g, ones(SystemSize(g)))
-initial_perturbation = State(g_power_reduction, convert(Vector, fp))
-@assert initial_perturbation.base.grid === g_power_reduction
 
 begin
     # solve before fault (i.e. simply staying on the fixed point)
     sol1 = solve(g, fp, (0., 2.))
+    final_state1 = sol1(:final)
     # solve after the fault
-    sol2 = solve(g_power_reduction, State(g_power_reduction, convert(Vector, sol1(:final))), (2., 3.))
-    sol3 = solve(g_power_reduction, State(g, convert(Vector, sol2(:final))), (3., 5.))
-    # t_end = tspan(sol2)[2]
-    # sol2(t_end, :, )
-    # sol(:initial)
-    # final_state = sol(:final)
-    # new_initial = State(g, convert(Array, final_state))
+    sol2 = solve(g_power_reduction, State(g_power_reduction, convert(Vector, final_state1)), (2., 3.))
+    final_state2 = sol2(:final)
+    # solve after clearance of the fault
+    sol3 = solve(g, State(g, convert(Vector, final_state2)), (3., 5.))
     sol = CompositeGridSolution(sol1, sol2, sol3)
 end
 
