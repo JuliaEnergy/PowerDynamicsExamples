@@ -10,4 +10,4 @@ SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]
 Julia = "^1.0"
-PowerDynamics = "^0.4.1"
+PowerDynSolve = ">=0.6.1"
