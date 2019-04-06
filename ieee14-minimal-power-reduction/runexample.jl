@@ -61,7 +61,7 @@ begin
     n = node_list[1]
     node_list_power_reduction[1] = SwingEqLVS(
         H=n.H,
-        P=n.P*0.1, # 90% power reduction
+        P=n.P*0.9, # 10% power reduction
         D=n.D,
         Ω=n.Ω,
         Γ=n.Γ,
