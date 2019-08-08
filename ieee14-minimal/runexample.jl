@@ -1,8 +1,8 @@
-using PowerDynamics
+using PowerDynamics: read_powergrid, Json, find_operationpoint, Perturbation, LineFault, simulate
 
 include("plotting.jl")
 
-powergrid = read_network_from_csv("IEEE14_busses.csv", "IEEE14_lines.csv")
+powergrid = read_powergrid("ieee-14-minimal.json", Json)
 
 operationpoint = find_operationpoint(powergrid)
 
