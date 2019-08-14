@@ -18,4 +18,5 @@ function plot_res(result, powergrid)
         xlabel=L"t[s]"
     )
     display(pl)
+    pl
 end
