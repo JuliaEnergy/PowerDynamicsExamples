@@ -11,6 +11,7 @@ begin
     using DataFrames
     using PowerDynamics
     using PowerDynBase: AbstractNodeParameters
+    using PowerDynOperationPoint
     using LaTeXStrings
     using Plots
     # Plots.scalefontsizes(0.8)
@@ -20,6 +21,7 @@ end
 # parameterization
 begin
     B = -5
+    I_r = 1
     τ_P = 0.5
     τ_Q = 0.5
     P = 0.2
@@ -32,8 +34,11 @@ end
 
 begin
     num_nodes=2
-    println("creating minimal two node example of 4th-order model with one generator and one motor")
+    println("creating minimal two node example of one slack node and one CSIMinimal node")
     node_list = Array{AbstractNodeParameters,1}()
+    append!(node_list, [CSIMinimal(
+        I_r=I_r,
+                )])
     append!(node_list, [VSIMinimal(
         τ_P=τ_P,
         τ_Q=τ_Q,
@@ -43,7 +48,7 @@ begin
         P=P,
         Q=Q
                 )])
-    append!(node_list,[SlackAlgebraic(U=1)])
+
 end
 
 begin
@@ -78,8 +83,8 @@ begin
     #x_guess[1,:θ]=theta
     #x_guess = ones(SystemSize(g))
 end
-fp = getOperationPoint(g, x_guess)
-#fp[1,:θ]
+
+fp = getOperationPoint(g, ones(SystemSize(g)))#fp[1,:θ]
 
 begin
     # just ensure the correct admittance laplacian is used
@@ -89,7 +94,7 @@ begin
     # define the initial condition as a perturbation from the fixed point
     x0 = copy(fp)
     #print(x0)
-    x0[1, :ω] += .2 # perturbation on the ω of the first node
+    x0[2, :v] += .2 # perturbation on the ω of the first node
     #x0[n, :int, i] : access to the i-th internal variables of the n-th node
     #print(x0[1, :ω])# : access to the complex voltage of the n-th node
     #print(x0[2, :θ])
@@ -104,15 +109,16 @@ begin
     #x0[:,:int,1]
     pl_v = plot(sol, :, :v, legend = (0.4, 1.), ylabel=L"V [p.u.]")
     pl_p = plot(sol, :, :p, legend = (0.8, 0.95), ylabel=L"p [p.u.]")#, label=p_labels)
-    pl_ω = plot(sol, 1, :ω, legend = (0.8, 0.7), ylabel=L"\omega \left[rad/s\right]")# color=ω_colors)#label=ω_labels,
+    #pl_i = plot(sol, :, :i, legend = (0.8, 0.95), ylabel=L"i [p.u.]")#, label=p_labels)
+    #pl_ω = plot(sol, 1, :ω, legend = (0.8, 0.7), ylabel=L"\omega \left[rad/s\right]")# color=ω_colors)#label=ω_labels,
     pl = plot(
         pl_v,
-        pl_p, pl_ω;
-        layout=(3,1),
+        pl_p;
+        layout=(2,1),
         size = (500, 500),
         lw=3,
         xlabel=L"t[s]"
         )
-    savefig(pl, "vsi-2node-minimal.pdf")
+    savefig(pl, "csi-2node-minimal.pdf")
     display(pl)
 end
