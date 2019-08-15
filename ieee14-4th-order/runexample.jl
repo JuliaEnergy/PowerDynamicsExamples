@@ -7,7 +7,7 @@ operationpoint = find_operationpoint(powergrid)
 
 # simulating a frequency perturbation at node 1
 solution1 = simulate(Perturbation(1, :ω, Inc(0.2)), powergrid, operationpoint, timespan = (0.0,0.3))
-plot1 = create_plot(solution)
+plot1 = create_plot(solution1)
 savefig(plot1, "ieee14-4th-order-frequency-perturbation.pdf")
 display(plot1)
 
