@@ -5,4 +5,3 @@ PowerDynamics = "cc46b21f-1b17-51c2-b642-af74c3d3a8be"
 
 [compat]
 Julia = "^1.0"
-PowerDynamics = "^2.1.0"
