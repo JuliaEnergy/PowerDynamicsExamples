@@ -1,0 +1,378 @@
+{
+  "nodes": [
+    {
+      "params": {
+        "T_d_dash": 7.4,
+        "D": 2,
+        "X_d": 0.8979,
+        "X_q": 0.646,
+        "Ω": 50,
+        "X_d_dash": 0.2995,
+        "T_q_dash": 0.1,
+        "X_q_dash": 0.646,
+        "P": 2.32,
+        "H": 5.148,
+        "E_f": 1
+      },
+      "type": "FourthOrderEq"
+    },
+    {
+      "params": {
+        "U": 1
+      },
+      "type": "SlackAlgebraic"
+    },
+    {
+      "params": {
+        "T_d_dash": 6.1,
+        "D": 2,
+        "X_d": 1.05,
+        "X_q": 0.98,
+        "Ω": 50,
+        "X_d_dash": 0.185,
+        "T_q_dash": 0.4,
+        "X_q_dash": 0.36,
+        "P": -0.942,
+        "H": 6.54,
+        "E_f": 1
+      },
+      "type": "FourthOrderEq"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.478,
+          "im": -0.0
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.076,
+          "im": -0.016
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "T_d_dash": 4.75,
+        "D": 2,
+        "X_d": 1.25,
+        "X_q": 1.22,
+        "Ω": 50,
+        "X_d_dash": 0.232,
+        "T_q_dash": 1.6,
+        "X_q_dash": 0.715,
+        "P": -0.112,
+        "H": 5.06,
+        "E_f": 1
+      },
+      "type": "FourthOrderEq"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.0,
+          "im": -0.0
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "T_d_dash": 4.75,
+        "D": 2,
+        "X_d": 1.25,
+        "X_q": 1.22,
+        "Ω": 50,
+        "X_d_dash": 0.232,
+        "T_q_dash": 1.6,
+        "X_q_dash": 0.715,
+        "P": 0.0,
+        "H": 5.06,
+        "E_f": 1
+      },
+      "type": "FourthOrderEq"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.295,
+          "im": -0.166
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.09,
+          "im": -0.058
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.035,
+          "im": -0.018
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.061,
+          "im": -0.016
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.135,
+          "im": -0.058
+        }
+      },
+      "type": "PQAlgebraic"
+    },
+    {
+      "params": {
+        "S": {
+          "re": -0.149,
+          "im": -0.05
+        }
+      },
+      "type": "PQAlgebraic"
+    }
+  ],
+  "lines": [
+    {
+      "params": {
+        "from": 1,
+        "Y": {
+          "re": 4.999131600798035,
+          "im": -15.263086523179553
+        },
+        "to": 2
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 1,
+        "Y": {
+          "re": 1.025897454970189,
+          "im": -4.234983682334831
+        },
+        "to": 5
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 2,
+        "Y": {
+          "re": 1.1350191923073958,
+          "im": -4.781863151757718
+        },
+        "to": 3
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 2,
+        "Y": {
+          "re": 1.686033150614943,
+          "im": -5.115838325872083
+        },
+        "to": 4
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 2,
+        "Y": {
+          "re": 1.7011396670944048,
+          "im": -5.193927397969713
+        },
+        "to": 5
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 3,
+        "Y": {
+          "re": 1.9859757099255606,
+          "im": -5.0688169775939205
+        },
+        "to": 4
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 4,
+        "Y": {
+          "re": 6.840980661495672,
+          "im": -21.578553981691588
+        },
+        "to": 5
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 4,
+        "Y": {
+          "re": 0.0,
+          "im": -4.781943381790359
+        },
+        "to": 7
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 4,
+        "Y": {
+          "re": 0.0,
+          "im": -1.7979790715236075
+        },
+        "to": 9
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 5,
+        "Y": {
+          "re": 0.0,
+          "im": -3.967939052456154
+        },
+        "to": 6
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 6,
+        "Y": {
+          "re": 1.9550285631772604,
+          "im": -4.0940743442404415
+        },
+        "to": 11
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 6,
+        "Y": {
+          "re": 1.525967440450974,
+          "im": -3.1759639650294003
+        },
+        "to": 12
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 6,
+        "Y": {
+          "re": 3.0989274038379877,
+          "im": -6.102755448193116
+        },
+        "to": 13
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 7,
+        "Y": {
+          "re": 0.0,
+          "im": -5.676979846721544
+        },
+        "to": 8
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 7,
+        "Y": {
+          "re": 0.0,
+          "im": -9.09008271975275
+        },
+        "to": 9
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 9,
+        "Y": {
+          "re": 3.902049552447428,
+          "im": -10.365394127060915
+        },
+        "to": 10
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 9,
+        "Y": {
+          "re": 1.4240054870199312,
+          "im": -3.0290504569306034
+        },
+        "to": 14
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 10,
+        "Y": {
+          "re": 1.8808847537003996,
+          "im": -4.402943749460521
+        },
+        "to": 11
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 12,
+        "Y": {
+          "re": 2.4890245868219187,
+          "im": -2.251974626172212
+        },
+        "to": 13
+      },
+      "type": "StaticLine"
+    },
+    {
+      "params": {
+        "from": 13,
+        "Y": {
+          "re": 1.1369941578063267,
+          "im": -2.314963475105352
+        },
+        "to": 14
+      },
+      "type": "StaticLine"
+    }
+  ],
+  "version": "1"
+}

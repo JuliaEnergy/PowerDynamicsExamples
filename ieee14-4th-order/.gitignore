@@ -1,3 +1,4 @@
 *.pdf
 *.png
 Manifest.toml
+*.DS_Store
