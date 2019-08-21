@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ `git status --porcelain --untracked-files=no` ]]; then
+if [[ git status --porcelain --untracked-files=no ]]; then
   # Decode private deploy SSH key
     openssl aes-256-cbc -k "$travis_key_password" -md sha256 -d -a -in travis_key.enc -out ./travis_key
     chmod 400 ./travis_key
