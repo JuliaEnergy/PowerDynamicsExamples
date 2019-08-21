@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [[ git status --porcelain --untracked-files=no ]]; then
   # Decode private deploy SSH key
