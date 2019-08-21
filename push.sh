@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if ! git diff-index --quiet HEAD --; then
-    # Decode private deploy SSH key
+if [[ `git status --porcelain --untracked-files=no` ]]; then
+  # Decode private deploy SSH key
     openssl aes-256-cbc -k "$travis_key_password" -md sha256 -d -a -in travis_key.enc -out ./travis_key
     chmod 400 ./travis_key
     echo "Host github.com" > ~/.ssh/config
@@ -14,4 +14,6 @@ if ! git diff-index --quiet HEAD --; then
     git commit -m "Automatic update of notebooks [skip ci]" # skip ci prevents infinite triggering of travis
     git diff-tree --no-commit-id --name-only -r HEAD # list changed files
     git push origin HEAD:$TRAVIS_BRANCH
+else
+  echo "No changes, nothing to do :)"
 fi
