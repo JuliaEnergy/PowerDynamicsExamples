@@ -7,4 +7,4 @@ PowerDynamics = "cc46b21f-1b17-51c2-b642-af74c3d3a8be"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]
-Julia = "^1.1"
+julia = "^1.2"
