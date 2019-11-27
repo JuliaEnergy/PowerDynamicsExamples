@@ -1,9 +1,9 @@
-using PowerDynamics: symbolsof
+import PowerDynamics: symbolsof
 using Plots: plot, get_color_palette, plot_color
 using LaTeXStrings: latexstring, @L_str
 
 function create_plot(sol)
-    swing_indices = findall(n -> :ω ∈ symbolsof(n), sol.powergrid.nodes)
+    swing_indices = findall(n -> :ω ∈ PowerDynamics.symbolsof(n), sol.powergrid.nodes)
     ω_colors = reshape(get_color_palette(:auto, plot_color(:white), 8)[swing_indices], (1,length(swing_indices)))
     ω_labels = reshape([latexstring(string(raw"\omega", "_{$i}")) for i=swing_indices], (1, length(swing_indices)))
     p_labels = reshape([latexstring(string(raw"p", "_{$i}")) for i=1:length(sol.powergrid.nodes)], (1, length(sol.powergrid.nodes)))
