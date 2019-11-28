@@ -6,6 +6,7 @@ include("ieee14-4th-order/plotting.jl")
 showdefinition(stdout, OpenLoopSwingEq)
 # OpenLoopSwingEq(H=1., D=0.1, Ω=50.)
 
+ 
 nodes = [
         #FourthOrderEq(H=5.148, P=2.32, D=4., Ω=50., E_f=2.32, T_d_dash=7.4 ,T_q_dash=0.1 ,X_q_dash=0.646 ,X_d_dash=0.2995,X_d=0.8979, X_q=0.646),
         OpenLoopSwingEq(H=1., D=0.1, Ω=50.),
