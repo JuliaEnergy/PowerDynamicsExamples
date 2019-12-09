@@ -11,7 +11,20 @@ struct SytemPars
 end
 
 """
+The problem in PowerDynamics is that each node function
+has only access to it's local variables
+but we need global access. To achieve this, we wrap
+the PowerDynamics RHS together with another function
+that gets the whole "x" as an input.
+"""
+
+"""
 x' = f(x, u)
+
+-> RHS created by PowerDynamics
+One variable, here x[3] is the control "u" and not changed in this function.
+In PowerDynamics, they should probably be internal variables of nodes.
+Then, the total RHS created by PowerDynamics is the open loop function.
 """
 function open_loop!(dx, x, p, t)
     dx[1] = x[2]
@@ -21,51 +34,62 @@ function open_loop!(dx, x, p, t)
 end
 
 """
-y = g(x), e.g. y = Cx
+u = k * y
+
+This function determines the "u". Note that here we have access to the whole
+state "x", can calculate Pmeas etc., and hence determine the control input for
+all nodes.
+
+This formulation requires a mass matrix.
 """
-function observation!(dx, x, p, t)
-    dx .= p.C * x
+function dae_controller!(dx, x, p, t)
+    dx[3] = x[3] - p.k_p * t^2
     nothing
 end
 
 """
 u' = k_I y
+
+As above but the control law is formulated as a differential equation.
+No mass matrix needed.
 """
-function Icontroller!(dx, x, p, t)
-    dx[3] = p.k_I * t
+function ode_controller!(dx, x, p, t)
+    dx[3] = 1//2 * p.k_p * t
     nothing
 end
 
-function wrapper!(dx, x, p, t)
+"""
+To close the loop, we need to wrap open loop and controller
+in a function with the right signature for DifferentialEquations.jl.
+"""
+function dae_wrapper!(dx, x, p, t)
     open_loop!(dx, x, p, t)
-    observation!(dx, x, p, t)
-    Pcontroller!(dx, x, p, t)
+    dae_controller!(dx, x, p, t)
     nothing
 end
 
-function wrapper(x, p, t)
-    y = open_loop(x, p, t)
-    return controller(y, p, t)
+function ode_wrapper!(dx, x, p, t)
+    open_loop!(dx, x, p, t)
+    ode_controller!(dx, dx, p, t) # (dx, dx, p, t) ??
+    nothing
 end
 
-d = 3
-p = SytemPars(1., 8., 0.1, 2I(d), 2.)
+d = 3 # dimension
+p = SytemPars(1., 8., 0.1, 2I(d), .5)
 
-u0 = rand(3)
+u0 = randn(d)
+u0[end] = 0
 
-closed_loop! = ODEFunction(wrapper!, mass_matrix=Diagonal([1, 1, 0]))
+dae_closed_loop! = ODEFunction(dae_wrapper!, mass_matrix=Diagonal([1, 1, 0]))
+ode_closed_loop! = ODEFunction(ode_wrapper!)
 
-ode = ODEProblem(closed_loop!, u0, (0., 1.), p)
+ode = ODEProblem(ode_closed_loop!, u0, (0., 100.), p)
+dae = ODEProblem(dae_closed_loop!, u0, (0., 100.), p)
 
-sol = solve(ode, Rodas4(), dt=0.01)
+ode_sol = solve(ode, Rodas4(), dt=0.001)
 
-plot(sol, vars=2:3)
+plot(ode_sol, vars=2)
 
+dae_sol = solve(dae, Rodas4(), dt=0.001)
 
-
-
-ode2 = ODEProblem(wrapper, u0, (0., 1.), p)
-
-sol2 = solve(ode2, Rodas4())
-
-plot(sol2, vars=1:2)
+plot!(dae_sol, vars=2)

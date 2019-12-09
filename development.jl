@@ -1,29 +1,39 @@
 using PowerDynamics
+import Base: @__doc__ #-> LoadError: UndefVarError: @__doc__ not defined
+import PowerDynamics: AbstractNode #-> UndefVarError: AbstractNode not defined
 
-include("openloopdyn.jl")
-include("ieee14-4th-order/plotting.jl")
 
-showdefinition(stdout, OpenLoopSwingEq)
-# OpenLoopSwingEq(H=1., D=0.1, Ω=50.)
+@DynamicNode MySwingEq(P, H, D, Ω) begin
+PowerDynamics.MassMatrix(;m_u = true, m_int = [1, 0])
+end begin
+@assert D > 0 "damping (D) should be >0"
+@assert H > 0 "inertia (H) should be >0"
+Ω_H = Ω * 2pi / H
+end [[ω, dω]] begin
+p = real(u * conj(i_c))
+dϕ = ω # dϕ is only a temp variable that Julia should optimize out
+du = u * im * dϕ
+dω = (P - D*ω - p)*Ω_H
+end
 
- 
-nodes = [
-        #FourthOrderEq(H=5.148, P=2.32, D=4., Ω=50., E_f=2.32, T_d_dash=7.4 ,T_q_dash=0.1 ,X_q_dash=0.646 ,X_d_dash=0.2995,X_d=0.8979, X_q=0.646),
-        OpenLoopSwingEq(H=1., D=0.1, Ω=50.),
-        SlackAlgebraic(U=1.)
-        ]
+showdefinition(stdout, MySwingEq) |> println
 
-lines =[StaticLine(from=1, to=2, Y=1. + 5. * im)]
+swing_node = MySwingEq(P=1., H=1., D=0.1, Ω=50.)
+slack = SlackAlgebraic(U=1.)
+
+nodes = [swing_node, slack]
+
+lines = [StaticLine(from=1, to=2, Y=1. + 5. * im)]
 
 pg = PowerGrid(nodes, lines)
 
+# The methods created by the macro are working here...
+
+dimension(swing_node)
+symbolsof(swing_node)
+
+# The following two lines both fail with:
+#   MethodError: no method matching dimension(::MySwingEq)
+# This leads to subsequent errors e.g. in find_operationpoint or find_valid_initial_condition.
+
 systemsize(pg)
-
-op = find_operationpoint(pg, randn(systemsize(pg)))
-
-p = PowerPerturbation(;node_number=1,fraction=1.,tspan_fault=(0.5, 0.6))
-#p = Perturbation(1, :ω, Inc(0.2))
-
-solution1 = simulate(p, pg, op, (0.0,10.))
-
-plot1 = create_plot(solution1)
