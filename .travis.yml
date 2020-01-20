@@ -1,6 +1,6 @@
 language: julia
 julia:
-- 1.1
+- 1.2
 script:
 - ./generate_notebooks.sh
 after_success:
