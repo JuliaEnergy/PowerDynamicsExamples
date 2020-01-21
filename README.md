@@ -6,3 +6,5 @@
 A Collection of Example Systems using [PowerDynamics.jl](https://github.com/JuliaEnergy/PowerDynamics.jl).
 More information will be coming soon.
 For now, we have to ask you to check out the docs and try to understand the examples yourself
+
+Please not: each example has its own folder and needs to be treated as an independent project. You can check out the examples in an online simulation environment by going to the example directory and "launch binderhub"
