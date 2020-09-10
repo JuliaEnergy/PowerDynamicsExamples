@@ -1,4 +1,4 @@
-using PowerDynamics: read_powergrid, Json, SlackAlgebraic, FourthOrderEq, PQAlgebraic, StaticLine, PowerGrid, Inc, find_operationpoint, ChangeInitialConditions, LineFailure, simulate
+using PowerDynamics: SlackAlgebraic, FourthOrderEq, PQAlgebraic, StaticLine, PowerGrid, Inc, find_operationpoint, ChangeInitialConditions, LineFailure, simulate
 using OrderedCollections: OrderedDict
 using Plots: savefig
 
