@@ -1,10 +1,10 @@
-using PowerDynamics: SlackAlgebraic, FourthOrderEq, VoltageDependentLoad, PiModelLine, StaticLine, Transformer, PowerGrid, Inc, find_operationpoint, ChangeInitialConditions, LineFailure, PowerPerturbation, simulate
+using PowerDynamics: SlackAlgebraic, FourthOrderEq, VoltageDependentLoad, PiModelLine, StaticLine, Transformer, PowerGrid, write_powergrid, Json, Inc, find_operationpoint, ChangeInitialConditions, LineFailure, PowerPerturbation, simulate
 using OrderedCollections: OrderedDict
 using Plots: savefig
 
 include("plotting.jl")
 
-# Data Source: https://labs.ece.uw.edu/pstca/pf14/ieee14cdf.txt
+# Data Source: Kodsi, S. K. M., & Canizares, C. A. (2003). Modeling and simulation of IEEE 14-bus system with FACTS controllers. University of Waterloo, Canada, Tech. Rep.
 
 buses=OrderedDict(
     "bus1"=> FourthOrderEq(T_d_dash=7.4, D=2, X_d=0.8979, X_q=0.646, Ω=50, X_d_dash=0.2995, T_q_dash=0.1, X_q_dash=0.646, P=2.32, H=5.148, E_f=1),
@@ -42,10 +42,11 @@ branches=OrderedDict(
     "branch17"=> StaticLine(from= "bus9", to = "bus14",Y=1.4240054870199312-1im*3.0290504569306034),
     "branch18"=> StaticLine(from= "bus10", to = "bus11",Y=1.8808847537003996-1im*4.402943749460521),
     "branch19"=> StaticLine(from= "bus12", to = "bus13",Y=2.4890245868219187-1im*2.251974626172212),
-    "branch20"=> StaticLine(from= "bus13", to = "bus14",Y=1.1369941578063267-1im*2.314963475105352))
+    "branch20"=> StaticLine(from= "bus13", to = "bus14",Y=1.1369941578063267-1im*2.314963475105352));
 
 
-powergrid = PowerGrid(buses, branches) 
+powergrid = PowerGrid(buses, branches)
+write_powergrid(powergrid,"ieee14-4th-order.json", Json)
 
 operationpoint = find_operationpoint(powergrid)
 
