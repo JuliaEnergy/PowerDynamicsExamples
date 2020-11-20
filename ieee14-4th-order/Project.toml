@@ -10,5 +10,5 @@ SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 Weave = "44d3d7a6-8a23-5bf8-98c5-b353f8df5ec9"
 
 [compat]
-PowerDynamics = "2.4.0"
+PowerDynamics = "2.4.1"
 julia = "^1.2"
